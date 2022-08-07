@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Event = require('../models/event.model');
+const User = require('../models/user.model');
 
 
 router.get('/',  async (req, res) => {

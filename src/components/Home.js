@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate();
 
   const [event, setEvent] = useState([]);
   const handleCreate = (e) => {
     e.preventDefault();
-    window.location.href = '/create'
+    navigate('/create')
   }
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +24,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log(localStorage.getItem('id'));
 
   return (
     <div className='container'>
@@ -34,7 +35,7 @@ export default function Home() {
             <div className='col'>
               <div class="card" style={{maxHeight:250,maxWidth:250}}>
               <div class="card-header text-dark text-start">
-                {event.createdBy}
+                {event._id}
               </div>
               <div class="card-body text-dark text-start">
                 <h5 class="card-title text-dark text-start">{event.title}</h5>
@@ -43,6 +44,7 @@ export default function Home() {
                 <p class="card-text text-dark text-start">{event.date}</p>
               </div>
             </div>
+            <br/>
             </div>
           )
         }
@@ -53,9 +55,7 @@ export default function Home() {
         }
     
   </div>
-          
-     
-        </div>
+</div>
       </div>
   )
 }

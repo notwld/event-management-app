@@ -1,7 +1,11 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export default function Create() {
+export default function Create(props) {
+  const navigate = useNavigate();
+  let e = localStorage.getItem('id') || props.id;
+  const [id, setId] = useState(e);
   const handleCreate = async (e) => {
     e.preventDefault();
     const title = document.querySelector('#title').value;
@@ -18,14 +22,14 @@ export default function Create() {
     .then(res => {
       //navigate to home page
       console.log(res.data);
-      window.location.href = '/';
-      localStorage.setItem('id', res.data.event._id);
+      navigate('/');
+      setId(localStorage.setItem('id', res.data.event._id));
     }
     ).catch(err => {
       console.log(err);
     });
   }
-
+  
   return (
     <div className='container mt-5 d-flex flex-column align-items-center justify-content-center'>
     <h1 className='display-1 text-center text-light'>Create Event</h1>

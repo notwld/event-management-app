@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom'
+import React,{useState} from 'react'
+import { BrowserRouter as Router, Route, Routes,Link,useNavigate } from 'react-router-dom'
 import App from '../App';
 import Create from './Create';
 import Home from './Home';
@@ -8,7 +8,9 @@ import Signup from './Signup';
 import axios from 'axios';
 
 export default function Nav() {
-  var id = localStorage.getItem('id') || null;
+  let e = localStorage.getItem('id') 
+  const [id, setId] = useState(e);
+  // const navigate = useNavigate();
   const handleLogout = async (e) => {
     e.preventDefault();
     const data = await axios.get('http://localhost:3000/user/logout')
@@ -16,7 +18,7 @@ export default function Nav() {
         console.log(res.data);
         localStorage.removeItem('id');
         window.location.href = '/';
-        id = null;
+        setId(null);
     }
     );
 }
@@ -54,9 +56,9 @@ export default function Nav() {
 </nav>
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/create" element={<Create/>}/>
-          <Route path="/signup" element={<Signup/>}/>
+          <Route path="/login" element={<Login id={id}/>}/>
+          <Route path="/create" element={<Create id={id}/>}/>
+          <Route path="/signup" element={<Signup id={id}/>}/>
           
         </Routes>
     </Router>
